@@ -29,5 +29,56 @@ const createUser = async (req, res, next) => {
     }
 };
 
+const updateUser = async (req, res, next) => {
+    try {
+      req.user = await users.findByIdAndUpdate(req.params.id, req.body);
+      next();
+    } catch (error) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(400).send(JSON.stringify({ message: "Ошибка обновления пользователя" }));
+    }
+};
 
-module.exports = {findAllUsers, findUserById, createUser };
+const deleteUser = async (req, res, next) => {
+    console.log("DELETE /users/:id");
+    try {
+      req.user = await users.findByIdAndDelete(req.params.id);
+      next();
+    } catch (error) {
+      res.setHeader("Content-Type", "application/json");
+          res.status(400).send(JSON.stringify({ message: "Ошибка удаления пользователя" }));
+    }
+};
+
+const checkEmptyNameAndEmailAndPassword = async (req, res, next) => {
+    if (!req.body.username || !req.body.email || !req.body.password) {
+      res.setHeader("Content-Type", "application/json");
+          res.status(400).send(JSON.stringify({ message: "Введите имя, email и пароль" }));
+    } else {
+      next();
+    }
+};
+
+const checkEmptyNameAndEmail = async (req, res, next) => {
+    if (!req.body.username || !req.body.email) {
+      res.setHeader("Content-Type", "application/json");
+          res.status(400).send(JSON.stringify({ message: "Введите имя и email" }));
+    } else {
+      next();
+    }
+};
+
+const checkIsUserExists = async (req, res, next) => {
+    const isInArray = req.usersArray.find((user) => {
+      return req.body.email === user.email;
+    });
+    if (isInArray) {
+      res.setHeader("Content-Type", "application/json");
+          res.status(400).send(JSON.stringify({ message: "Пользователь с таким email уже существует" }));
+    } else {
+      next();
+    }
+};
+
+
+module.exports = {findAllUsers, updateUser , createUser, checkEmptyNameAndEmailAndPassword, checkEmptyNameAndEmail, checkIsUserExists, deleteUser };

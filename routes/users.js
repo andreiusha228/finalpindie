@@ -1,9 +1,11 @@
-const { sendAllUsers, sendUserCreated } = require('../controllers/users');
-const { findAllUsers, createUser } = require('../middlewares/users');
+const { sendAllUsers, sendUserCreated, sendUserUpdated, sendUserDeleted } = require('../controllers/users');
+const { findAllUsers, createUser, updateUser, checkEmptyNameAndEmailAndPassword, checkEmptyNameAndEmail, checkIsUserExists, deleteUser } = require('../middlewares/users');
 
 const usersRouter = require('express').Router();
 
 usersRouter.get("/users", findAllUsers, sendAllUsers);
-usersRouter.post("/users", createUser, sendUserCreated);
+usersRouter.post("/users", findAllUsers, checkIsUserExists, checkEmptyNameAndEmailAndPassword, createUser, sendUserCreated);
+usersRouter.put("/users/:id", checkEmptyNameAndEmail, updateUser, sendUserUpdated);
+usersRouter.delete("/users/:id", deleteUser, sendUserDeleted);
 
 module.exports = usersRouter;
