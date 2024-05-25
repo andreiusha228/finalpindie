@@ -9,6 +9,8 @@ async function connectToDataBase() {
         console.log("Connection is NOT ok");
         console.log("err");
     }
+
+    await mongoose.connect(DB_URL);
 }
 
 module.exports = connectToDataBase;
