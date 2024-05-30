@@ -19,4 +19,9 @@ const sendCategoryDeleted = (req, res) => {
     res.end(JSON.stringify(req.category));
 };
 
-module.exports = { sendAllCategories, sendCategoryCreated, sendCategoryUpdated, sendCategoryDeleted };
+const sendCategoryById = (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(req.category));
+};
+
+module.exports = { sendAllCategories, sendCategoryCreated, sendCategoryUpdated, sendCategoryDeleted, sendCategoryById };
