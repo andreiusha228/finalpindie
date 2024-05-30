@@ -3,7 +3,7 @@ const allowedCors = ["http://localhost:3000",
     "http://backend-final-bukovskiy.nomorepartiesco.ru",
     "https://backend-final-bukovskiy.nomorepartiesco.ru",
     "http://frontend-final-bukovskiy.nomorepartiesco.ru",
-    "http://frontend-final-bukovskiy.nomorepartiesco.ru"
+    "https://frontend-final-bukovskiy.nomorepartiesco.ru"
 ];
 
 function cors(req, res, next) {
